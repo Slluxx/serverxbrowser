@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+serverxbrowser.elf
+serverxbrowser.nacp
+serverxbrowser.nro
+
+build/*
