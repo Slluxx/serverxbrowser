@@ -7,7 +7,7 @@
 #include <switch.h>
 #include "server.hpp"
 
-#define SERVER_PORT 80
+#define SERVER_PORT 1234
 #define __DEBUG__ 1
 
 nxgallery::WebServer* webServer;
@@ -75,7 +75,7 @@ void startWebBrowser(void* arg){
     Result rc;
     WebCommonConfig conf;
     WebCommonReply out;
-    rc = webPageCreate(&conf, "http://127.0.0.1:80/");
+    rc = webPageCreate(&conf, "http://127.0.0.1:1234/");
     if (R_FAILED(rc))
         printf("Error starting Browser");
     webConfigSetJsExtension(&conf, true);
@@ -112,8 +112,10 @@ int main(int argc, char* argv[])
     Result rc;
     // rc = threadCreate(&thread, threadFunc, NULL, NULL, 0x10000, 0x2C, -2);
     // rc = threadStart(&thread);
-    rc = threadCreate(&thread, startWebBrowser, NULL, NULL, 0x10000, 0x2C, -2);
+
+    // rc = threadCreate(&thread, startWebBrowser, NULL, NULL, 0x10000, 0x2C, -2);
     // rc = threadStart(&thread);
+
     // if (R_SUCCEEDED(rc))
     // {
     //     rc = threadStart(&thread);
@@ -140,6 +142,8 @@ int main(int argc, char* argv[])
         if (kDown & HidNpadButton_A){
             threadCreate(&thread, startWebBrowser, NULL, NULL, 0x10000, 0x2C, -2);
             threadStart(&thread);
+            threadWaitForExit(&thread);
+            threadClose(&thread);
         }
             
             // startWebBrowser();
